@@ -1,8 +1,6 @@
 <div class="book-detail-container">
-  <div class="book-card">
-    <!-- TODO 9: Dans la console on voit cette erreur : main.ts:5 ERROR TypeError: Cannot read properties of undefined (reading 'title')
-     En realité on affiche le titre du livre avant qu'il ne soit défini. Fix le bug -->
-    <h1 class="book-title">{{ book.title }}</h1> <!-- TODO 10: Appliquer la directive highlight à ce champ -->
+  <div class="book-card" *ngIf="book; else loading">
+    <h1 class="book-title" [appHighlight]="true">{{ book.title | titleCase }}</h1>
     
     <div class="book-info">
       <p class="author">{{ book.author }}</p>
@@ -11,7 +9,7 @@
       <div class="info-grid">
         <div class="info-item">
           <strong>Catégorie</strong>
-          {{ book.category }}
+          {{ book.category | textFormat }}
         </div>
         <div class="info-item">
           <strong>Note</strong>
@@ -25,12 +23,15 @@
     </div>
 
     <div class="button-container">
-      <!-- TODO 12: Le bouton ne fonctionne pas -->
       <button class="back-button" (click)="goBack()">
         <i class="fas fa-arrow-left"></i> Retour
       </button>
     </div>
   </div>
+  
+  <ng-template #loading>
+    <div class="loading">Chargement du livre...</div>
+  </ng-template>
 </div>
     
 

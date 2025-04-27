@@ -1,4 +1,25 @@
-{{ title }} <!-- TODO 20 : Identifie et corrige l'erreur & affiche le titre en uppercase -->
-<div>
-  <h1>Gérez votre collection de livres en toute simplicité</h1>
+<h1 class="welcome-title">{{ title | uppercase }}</h1>
+<div class="home-content">
+  <h2>Gérez votre collection de livres en toute simplicité</h2>
+  
+  <div class="features">
+    <div class="feature-card">
+      <h3>Organisez</h3>
+      <p>Ajoutez, modifiez et supprimez des livres dans votre bibliothèque personnelle.</p>
+    </div>
+    
+    <div class="feature-card">
+      <h3>Marquez vos favoris</h3>
+      <p>Indiquez les livres que vous préférez pour les retrouver facilement.</p>
+    </div>
+    
+    <div class="feature-card">
+      <h3>Notez vos lectures</h3>
+      <p>Attribuez une note à chaque livre pour vous souvenir de vos impressions.</p>
+    </div>
+  </div>
+  
+  <div class="cta-container">
+    <button class="cta-button" routerLink="/books">Accéder à ma bibliothèque</button>
+  </div>
 </div>

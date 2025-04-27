@@ -1,34 +1,9 @@
-<header class="header">
-  <h1>
-    <!-- TODO 1 : Faites en sorte que le lien fonctionne, et que cela ne reload pas completement la page
-       Indice : Il faut utiliser une directive sur le tag <a>
-    -->
-    <a routerLink="/">
-      <span>{{title}}</span> <!-- TODO 2 : Creer un pipe qui permet de mettre le premier mot en majuscule, le reste en minuscule et de remplacer les underscores par des espaces -->
-    </a>
-  </h1>
-  <nav>
-    <ul>
-      <!-- TODO 3 : Faites en sorte que les liens fonctionnent, et que cela ne reload pas completement la page
-       Indice : Il faut utiliser une directive sur le tag <a>
-      -->
-      <li>
-        <a href="/">Accueil</a>
-      </li>
-      <li>
-        <a href="/books">Ma Bibliothèque</a>
-      </li>
-    </ul>
-  </nav>
-</header>
-<!-- TODO 22 (Bonus point, optionnel): Creer un component pour afficher le header et l'utiliser ici -->
+<app-header [title]="title"></app-header>
 
 <main class="main-content">
-  <!-- TODO 4: Les pages ne sont pas affichées. Essayer de résoudre le problème -->
   <router-outlet></router-outlet>
 </main>
 
-<footer class="footer">
-  <p>© 2025 BiblioTech - Tous droits réservés</p>
-</footer>
-<!-- TODO 23 (Bonus point): Creer un component pour afficher le footer et l'utiliser ici -->
+<app-footer></app-footer>
+
+<app-notification></app-notification>

@@ -1,23 +1,23 @@
 <h1>Ma bibliothèque</h1>
 
-
-<button routerLink="/books/add">
-  Ajouter un livre
-</button>
+<div class="action-buttons">
+  <button class="home-button" routerLink="/">
+    <i class="fas fa-home"></i> Accueil
+  </button>
+  
+  <button class="add-button" routerLink="/books/add">
+    <i class="fas fa-plus"></i> Ajouter un livre
+  </button>
+</div>
 
 <div class="books-container">
-  <!-- TODO 13 : Les données sont passées à la liste mais pas affichées. Affiche les données -->
-  <div *ngIf="data && data.length > 0; else noBooks">
+  <div *ngIf="books && books.length > 0; else noBooks">
     <div class="book-card" *ngFor="let book of books">
       <div class="book-info">
-        <h2>{{ book.title }}</h2> <!-- TODO 14: Appliquer la directive highlight à ce champ -->
+        <h2 [appHighlight]="true">{{ book.title | titleCase }}</h2>
         <p>{{ book.author }}</p>
-        <p>
-          <!-- TODO 15: Afficher la description du livre en utilisant un pour limiter à 20 caractères et ajouter des points de suspension si la description est plus longue.
-           Il faut utiliser un pipe existant ou en créer un nouveau pipe. Libre choix -->
-          {{ book.description }}
-        </p>
-        <p>Catégorie: {{ book.category }}</p>
+        <p>{{ book.description | truncate:50 }}</p>
+        <p>Catégorie: {{ book.category | textFormat }}</p>
         <p>Note: {{ book.rating }}</p>
         <p>Favori: {{ book.isFavorite ? 'Oui' : 'Non' }}</p>
       </div>
@@ -31,6 +31,9 @@
   </div>
 
   <ng-template #noBooks>
-    <p>Aucun livre dans votre bibliothèque. Commencez par en ajouter un!</p>
+    <div class="no-books-message">
+      <p>Aucun livre dans votre bibliothèque.</p>
+      <button class="add-button" routerLink="/books/add">Ajouter mon premier livre</button>
+    </div>
   </ng-template>
 </div>

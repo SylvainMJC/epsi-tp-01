@@ -10,6 +10,10 @@ import { BOOKS } from '../mocks/books.mock';
 export class BookService {
   constructor() {}
   
+  private generateId(): string {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2);
+  }
+  
   getBooks(): Observable<Book[]> {
     return of(BOOKS).pipe(delay(300));
   }
@@ -24,61 +28,62 @@ export class BookService {
     return of(book).pipe(delay(300));
   }
   
-  addBook(book: Partial<Book>): Observable<Book> {
-    // Create new book
-    const newBook: Book = {
-      id: (BOOKS.length + 1).toString(),
-      title: book.title || '',
-      author: book.author || '',
-      description: book.description || '',
-      category: book.category || '',
-      rating: 0,
-      isFavorite: false
+  addBook(book: Book): Observable<Book> {
+    const newBookId = this.generateId();
+    const newBook = {
+      ...book,
+      id: newBookId,
+      createdAt: new Date().toISOString()
     };
     
-    // In a real app, we would add to database
     BOOKS.push(newBook);
     
     return of(newBook).pipe(delay(300));
   }
   
-  updateBook(id: string, bookData: Partial<Book>): Observable<Book> {
-    const index = BOOKS.findIndex(b => b.id === id);
+  updateBook(updatedBook: Book): Observable<Book> {
+    const index = BOOKS.findIndex(b => b.id === updatedBook.id);
     
     if (index === -1) {
       return throwError(() => new Error('Livre non trouvé')).pipe(delay(300));
     }
     
-    // Update book
-    const updatedBook = { ...BOOKS[index], ...bookData };
-    BOOKS[index] = updatedBook;
+    BOOKS[index] = { ...BOOKS[index], ...updatedBook };
     
-    return of(updatedBook).pipe(delay(300));
+    return of(BOOKS[index]).pipe(delay(300));
   }
   
-  deleteBook(id: string): Observable<void> {
-    const index = BOOKS.findIndex(b => b.id === id);
+  deleteBook(id: string): Observable<boolean> {
+    const initialLength = BOOKS.length;
+    const filteredBooks = BOOKS.filter(book => book.id !== id);
     
-    if (index === -1) {
-      return throwError(() => new Error('Livre non trouvé')).pipe(delay(300));
-    }
+    // Update the array while keeping the same reference
+    BOOKS.length = 0;
+    BOOKS.push(...filteredBooks);
     
-    // Remove book
-    BOOKS.splice(index, 1);
-    
-    return of(undefined).pipe(delay(300));
+    return of(BOOKS.length !== initialLength).pipe(delay(300));
   }
   
   toggleFavorite(id: string): Observable<Book> {
+    const book = BOOKS.find(book => book.id === id);
+    
+    if (!book) {
+      return throwError(() => new Error('Livre non trouvé'));
+    }
+    
+    const updatedBook = {
+      ...book,
+      isFavorite: !book.isFavorite
+    };
+    
     const index = BOOKS.findIndex(b => b.id === id);
     
     if (index === -1) {
       return throwError(() => new Error('Livre non trouvé')).pipe(delay(300));
     }
     
-    // Toggle favorite status
-    BOOKS[index].isFavorite = !BOOKS[index].isFavorite;
+    BOOKS[index] = updatedBook;
     
-    return of(BOOKS[index]).pipe(delay(300));
+    return of(updatedBook).pipe(delay(300));
   }
 }

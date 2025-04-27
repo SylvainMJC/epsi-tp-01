@@ -1,0 +1,161 @@
+h1 {
+  color: #1a237e;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  border-bottom: 3px solid #3f51b5;
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.home-button, .add-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 1rem;
+}
+
+.home-button {
+  background-color: #f5f5f5;
+  color: #424242;
+  border: 2px solid #e0e0e0;
+}
+
+.home-button:hover {
+  background-color: #eeeeee;
+  transform: translateY(-1px);
+}
+
+.add-button {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.add-button:hover {
+  background-color: #303f9f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.books-container {
+  margin-top: 2rem;
+}
+
+.book-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.12);
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-info h2 {
+  color: #1a237e;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.book-info p {
+  margin: 0.5rem 0;
+  color: #455a64;
+}
+
+.book-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.book-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.book-actions button:first-child {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.book-actions button:nth-child(2) {
+  background-color: #ff9800;
+  color: white;
+}
+
+.book-actions button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.book-actions button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.no-books-message {
+  background-color: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.no-books-message p {
+  color: #546e7a;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.no-books-message .add-button {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .book-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .book-info {
+    margin-bottom: 1rem;
+  }
+  
+  .book-actions {
+    width: 100%;
+    flex-direction: row;
+  }
+  
+  .book-actions button {
+    flex: 1;
+  }
+}

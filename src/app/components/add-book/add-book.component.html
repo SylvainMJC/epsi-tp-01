@@ -1,10 +1,76 @@
 <div class="form-container">
   <h1>Ajouter un livre</h1>
-  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
-    <input type="text" formControlName="title" placeholder="Titre du livre">
-    <input type="text" formControlName="author" placeholder="Nom de l'auteur">
-    <input type="text" formControlName="description" placeholder="Description du livre">
-    <input type="text" formControlName="category" placeholder="Catégorie du livre">
-    <button type="submit">Ajouter le livre</button>
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="title">Titre du livre*</label>
+      <input type="text" id="title" formControlName="title" placeholder="Titre du livre" 
+             [ngClass]="{'invalid-input': (bookForm.get('title')?.invalid && (bookForm.get('title')?.touched || submitted))}">
+      <div class="error-message" *ngIf="bookForm.get('title')?.invalid && (bookForm.get('title')?.touched || submitted)">
+        <span *ngIf="bookForm.get('title')?.errors?.['required']">Le titre est requis</span>
+        <span *ngIf="bookForm.get('title')?.errors?.['minlength']">Le titre doit contenir au moins 3 caractères</span>
+        <span *ngIf="bookForm.get('title')?.errors?.['maxlength']">Le titre ne peut pas dépasser 100 caractères</span>
+        <span *ngIf="bookForm.get('title')?.errors?.['specialChars']">Le titre contient des caractères non autorisés</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="author">Auteur*</label>
+      <input type="text" id="author" formControlName="author" placeholder="Nom de l'auteur"
+             [ngClass]="{'invalid-input': (bookForm.get('author')?.invalid && (bookForm.get('author')?.touched || submitted))}">
+      <div class="error-message" *ngIf="bookForm.get('author')?.invalid && (bookForm.get('author')?.touched || submitted)">
+        <span *ngIf="bookForm.get('author')?.errors?.['required']">L'auteur est requis</span>
+        <span *ngIf="bookForm.get('author')?.errors?.['minlength']">Le nom de l'auteur doit contenir au moins 3 caractères</span>
+        <span *ngIf="bookForm.get('author')?.errors?.['maxlength']">Le nom de l'auteur ne peut pas dépasser 50 caractères</span>
+        <span *ngIf="bookForm.get('author')?.errors?.['invalidName']">Le nom de l'auteur ne doit contenir que des lettres, espaces, tirets ou apostrophes</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description*</label>
+      <textarea id="description" formControlName="description" placeholder="Description du livre" rows="4"
+                [ngClass]="{'invalid-input': (bookForm.get('description')?.invalid && (bookForm.get('description')?.touched || submitted))}"></textarea>
+      <div class="error-message" *ngIf="bookForm.get('description')?.invalid && (bookForm.get('description')?.touched || submitted)">
+        <span *ngIf="bookForm.get('description')?.errors?.['required']">La description est requise</span>
+        <span *ngIf="bookForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 10 caractères</span>
+        <span *ngIf="bookForm.get('description')?.errors?.['maxlength']">La description ne peut pas dépasser 1000 caractères</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Catégorie*</label>
+      <select id="category" formControlName="category"
+              [ngClass]="{'invalid-input': (bookForm.get('category')?.invalid && (bookForm.get('category')?.touched || submitted))}">
+        <option value="" disabled>Sélectionnez une catégorie</option>
+        <option *ngFor="let category of categories" [value]="category">{{category | textFormat}}</option>
+      </select>
+      <div class="error-message" *ngIf="bookForm.get('category')?.invalid && (bookForm.get('category')?.touched || submitted)">
+        <span *ngIf="bookForm.get('category')?.errors?.['required']">La catégorie est requise</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Note (0-5)*</label>
+      <input type="number" id="rating" formControlName="rating" min="0" max="5" step="0.5"
+             [ngClass]="{'invalid-input': (bookForm.get('rating')?.invalid && (bookForm.get('rating')?.touched || submitted))}">
+      <div class="error-message" *ngIf="bookForm.get('rating')?.invalid && (bookForm.get('rating')?.touched || submitted)">
+        <span *ngIf="bookForm.get('rating')?.errors?.['required']">La note est requise</span>
+        <span *ngIf="bookForm.get('rating')?.errors?.['min'] || bookForm.get('rating')?.errors?.['max']">La note doit être entre 0 et 5</span>
+        <span *ngIf="bookForm.get('rating')?.errors?.['notANumber']">Veuillez entrer un nombre valide</span>
+      </div>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <label>
+        <input type="checkbox" formControlName="isFavorite">
+        Ajouter aux favoris
+      </label>
+    </div>
+
+    <div class="required-fields-note">* Champs requis</div>
+
+    <div class="form-actions">
+      <button type="button" class="back-button" routerLink="/books">Retour</button>
+      <button type="submit" [disabled]="submitted && bookForm.invalid">Ajouter le livre</button>
+    </div>
   </form>
 </div>
